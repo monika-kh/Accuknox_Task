@@ -24,7 +24,7 @@ The Social Networking Application is a platform designed to facilitate social in
 3. Build the Docker image: `docker-compose build`
 4. Start the Docker containers: `docker-compose up`
 5. The application should now be running and accessible at `http://localhost:8000`
-
+6. this is postman collections :`https://www.postman.com/grey-capsule-346904/workspace/accuknox/collection/32195921-6a73ef57-6849-49b2-b358-fe45d072eb2e?action=share&creator=32195921`
 ## Usage
 
 Explain how to use your project once it's installed. Include any configuration steps or environment setup required.
@@ -38,13 +38,7 @@ Explain how to use your project once it's installed. Include any configuration s
 - **Create User**: Endpoint to register a new user.
   - Method: POST
   - URL: `accounts/signup/`
-  - Request Body:
-    ```json
-    {
-        "email": "user@example.com",
-        "password": "your_password"
-    }
-    ```
+  - Authentication: Basic authentication (email and password)
   - Response: JSON object indicating success or failure.
 
 #### User Login
