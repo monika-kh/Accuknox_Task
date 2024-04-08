@@ -20,7 +20,7 @@ The Social Networking Application is a platform designed to facilitate social in
 ### Using Docker
 
 1. Clone the repository: `git clone `
-2. Navigate to the project directory: `cd your_project`
+2. Navigate to the project directory: `cd Accuknox`
 3. Build the Docker image: `docker-compose build`
 4. Start the Docker containers: `docker-compose up`
 5. The application should now be running and accessible at `http://localhost:8000`

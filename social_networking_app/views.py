@@ -12,10 +12,10 @@ from .serializers import (
     FriendSerializer,
     UserSignupSerializer
 )
-from .throttles import FriendRequestThrottle
 import sentry_sdk
 from rest_framework import filters
 from django.db.models import Q
+from datetime import datetime, timedelta
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -30,13 +30,24 @@ class FriendRequestViewSet(viewsets.ViewSet):
     permission_classes = [
         IsAuthenticated
     ]  # Ensure user is authenticated to access this endpoint
-    throttle_classes = [FriendRequestThrottle]
 
     def create(self, request):
         """
         Handle POST request for creating friend requests.
         """
         try:
+            time_threshold = datetime.now() - timedelta(minutes=1)
+            recent_requests_count = FriendRequest.objects.filter(
+                from_user=request.user, created_at__gte=time_threshold
+            ).count()
+            # if user send multiple firend request in one minutes. show error
+            if recent_requests_count >= 3:
+                return Response(
+                    {
+                        "error": "You cannot send more than 3 friend requests within a minute."
+                    },
+                    status=status.HTTP_429_TOO_MANY_REQUESTS,
+                )
             logger.info("Friend request creation request received")  # Log an info message
             serializer = FriendRequestSerializer(data=request.data)
             if serializer.is_valid():
